@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多语言</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+</head>
+<body>
+    <button id="cn" class="btn btn-primary">中文</button>
+    <button id="en" class="btn btn-primary">English</button>
+    <div id="app"></div>
+    <script src="lib/axios.js"></script>
+    <script>
+        var warp = document.getElementById('app');
+        var lan_cn = document.getElementById('cn');
+        var lan_en = document.getElementById('en');
+        
+        lan_cn.addEventListener('click',()=>changeLan('cn'),false);
+        lan_en.addEventListener('click',()=>changeLan('en'),false);
+
+        let changeLan = (type) =>{
+            axios.get('http://localhost:3000/language',{
+                headers:{'Accept-Language': type == 'cn'? 'en,zh-CN;q=0.9,zh;q=0.8':'zh-CN,zh;q=0.9,en;q=0.8'}
+            }).then(res=>{
+                warp.innerHTML = res.data ;
+            })
+        }
+        changeLan('cn')
+    </script>
+</body>
+</html> 
