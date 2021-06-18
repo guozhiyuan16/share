@@ -17,7 +17,6 @@ const language = {
 }
 const defaultLanguage = 'en';
 class LanController {
-    
     static async language(ctx){
         let lan = ctx.header['accept-language'];
         if(lan){
@@ -35,7 +34,7 @@ class LanController {
             }
         }else{
             await ctx.render('index', {
-                lan:language['defaultLanguage'],
+                lan:language[defaultLanguage],
             })
         }
        

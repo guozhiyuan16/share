@@ -33,7 +33,7 @@ app
     extension: 'ejs'
   }))
   .use(cacheHandler)
-  .use(authHandler)
+  //.use(authHandler)
   // .use(static(
   //   path.join( __dirname,  staticPath)
   // ))
