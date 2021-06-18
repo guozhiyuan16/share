@@ -10,16 +10,26 @@ module.exports = async (ctx,next) => {
     
     if(ctx.method === 'HEAD' || ctx.method === 'GET'){
         let realPath = path.join(__dirname,'../',staticPath,ctx.url); // 请求路径
-        let statObj;
         try{
-            statObj = await stat(realPath);
-            if (statObj.isDirectory()){
-                realPath += `index.html`
-                statObj = await stat(realPath);
-            }
+            let statObj = await stat(realPath);
             if(statObj){
+                // 强制缓存
+                // ctx.set('Cache-Control','max-age=10'); // chrome
+                // ctx.set('Expires', new Date(Date.now() + 10 * 1000).toUTCString()); // IE 需要设置绝对时间
+
+                let ifModifySince = ctx.header['if-modified-since'];
+                if(ifModifySince && ifModifySince ==  statObj.ctime.toUTCString()){ // 文件没有变化
+                    ctx.status = 304
+                    return;
+                }
+                ctx.set({
+                    'Last-Modified':statObj.ctime.toUTCString(),
+                    'Cache-Control':'no-cache'
+                })
+                // ctx.set('Last-Modified', statObj.ctime.toUTCString())
                 ctx.type = path.extname(realPath);
-                ctx.body = fs.createReadStream(realPath)
+                ctx.status = 200;
+                ctx.body = fs.createReadStream(realPath)   
             }
         }catch(e){
             ctx.throw(404)

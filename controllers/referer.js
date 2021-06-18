@@ -8,12 +8,14 @@ const whitList = [
     'localhost:8080',
     'www.pic1.me:8080'
 ]
-class LinkController {
+class refererController {
     
     static async getImg(ctx){
+        console.log('getImg')
         let referer = ctx.header['referer']; // http://localhost:8080/
         let imgName = ctx.params.id;
-        let realPath = path.join(__dirname,'../lib',imgName);
+        let realPath = path.join(__dirname,'../page/img',imgName);
+        console.log(realPath);
         try{
             let statObj = await stat(realPath);
             if(statObj){
@@ -32,4 +34,4 @@ class LinkController {
     }
 }
 
-module.exports = LinkController;
+module.exports = refererController;
