@@ -13,27 +13,34 @@ module.exports = async (ctx,next) => {
         try{
             let statObj = await stat(realPath);
             if(statObj){
-                // 强制缓存
-                // ctx.set('Cache-Control','max-age=10'); // chrome
-                // ctx.set('Expires', new Date(Date.now() + 10 * 1000).toUTCString()); // IE 需要设置绝对时间
+                if(statObj.isFile()){
+                    // 强制缓存
+                    // ctx.set('Cache-Control','max-age=10'); // chrome
+                    // ctx.set('Expires', new Date(Date.now() + 10 * 1000).toUTCString()); // IE 需要设置绝对时间 （兼容写法优先级低）
 
-                let ifModifySince = ctx.header['if-modified-since'];
-                if(ifModifySince && ifModifySince ==  statObj.ctime.toUTCString()){ // 文件没有变化
-                    ctx.status = 304
-                    return;
+                    // 对比缓存
+                    let ifModifySince = ctx.header['if-modified-since'];
+                    if(ifModifySince && ifModifySince ==  statObj.ctime.toUTCString()){ // 文件没有变化
+                        ctx.status = 304;
+                        return;
+                    }
+                    ctx.set({
+                        'Last-Modified':statObj.ctime.toUTCString(),
+                        'Cache-Control':'no-cache'
+                    })
+                    // ctx.set('Last-Modified', statObj.ctime.toUTCString())
+                    ctx.type = path.extname(realPath);
+                    ctx.status = 200;
+                    ctx.body = fs.createReadStream(realPath)   
                 }
-                ctx.set({
-                    'Last-Modified':statObj.ctime.toUTCString(),
-                    'Cache-Control':'no-cache'
-                })
-                // ctx.set('Last-Modified', statObj.ctime.toUTCString())
-                ctx.type = path.extname(realPath);
-                ctx.status = 200;
-                ctx.body = fs.createReadStream(realPath)   
+            }else{
+                await next();
             }
         }catch(e){
-            ctx.throw(404)
+            ctx.throw(404);
+            await next();
         }
+        await next();
     }
     await next();
 }
