@@ -16,8 +16,9 @@ module.exports = async (ctx,next) => {
                 if(statObj.isFile()){
                     if(encoding.includes('gzip')){
                         ctx.set('Content-Encoding','gzip');
-                        // ctx.body = await zlib.createGzip(fs.createReadStream(realPath).pipe())
-                        await next();
+                        ctx.type = path.extname(realPath);
+                        ctx.status = 200;
+                        ctx.body = fs.createReadStream(realPath).pipe(zlib.createGzip())
                     }
                 }
             }
@@ -25,5 +26,5 @@ module.exports = async (ctx,next) => {
             ctx.throw(404)
         }
     }
-    // await next();
+    await next();
 }

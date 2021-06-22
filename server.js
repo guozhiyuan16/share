@@ -33,7 +33,7 @@ app
   // .use(views(path.join(__dirname, 'view'), { // 加载模板引擎中间件
   //   extension: 'ejs'
   // }))
-  //.use(zipHandler)
+  // .use(zipHandler)
   .use(refererHandler)
   .use(cacheHandler)
   
