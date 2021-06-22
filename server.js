@@ -13,9 +13,10 @@ const loadRouter = require('./router');
 
 let app = new Koa;
 
-// moddlewares
-const authHandler = require('./middlewares/refererHandler');
+// middlewares
 const cacheHandler = require('./middlewares/cacheHandler');
+const refererHandler = require('./middlewares/refererHandler');
+const zipHandler = require('./middlewares/zipHandler');
 
 app
   // .use(cors()) // 解决跨域问题中间件
@@ -32,8 +33,11 @@ app
   // .use(views(path.join(__dirname, 'view'), { // 加载模板引擎中间件
   //   extension: 'ejs'
   // }))
-  .use(authHandler)
+  //.use(zipHandler)
+  .use(refererHandler)
   .use(cacheHandler)
+  
+ 
   // .use(static( // 加载静态服务中间件
   //   path.join( __dirname,  staticPath)
   // ))

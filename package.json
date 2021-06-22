@@ -22,6 +22,7 @@
   },
   "devDependencies": {
     "bootstrap": "^5.0.1",
+    "chalk": "^4.1.1",
     "normalize.css": "^8.0.1"
   }
 }
