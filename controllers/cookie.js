@@ -1,7 +1,8 @@
 class CookieController {
     static async writeCookie(ctx){
-        ctx.set('Set-Cookie',['name=gzy; max-age=10','age=18; httpOnly=true; '])
+        // ctx.set('Set-Cookie',['name=gzy; max-age=10','age=18; httpOnly=true; '])
         // ctx.setCookie()
+        ctx.cookies.set('name','gzy',{ signed:true })
         ctx.status = 200;
         ctx.body = "write cookie"
     }

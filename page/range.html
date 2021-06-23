@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>断点续传</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <ul class='cookie'>
+        <li><button id="start" class="btn btn-primary">开始</button></li>
+        <li><button id="suspend" class="btn btn-danger">暂停</button></li>
+    </ul>
+    <div id="root">
+        通过range模拟下载
+    </div>
+    <script src="lib/axios.js"></script>
+    <script>
+        var start_btn = document.getElementById('start');
+        var suspend_btn = document.getElementById('suspend');
+        var start = 0; // 开始
+        var offset = 60; // 偏移量
+        var end = start + offset; // 结束
+        var downloadArr = []; // 下载内容
+        var timer = null; // 定时器
+        
+        start_btn.addEventListener('click',function(){
+            timer = window.setInterval(function(){
+                axios.get('/download/1.txt',{
+                    headers:{'Range': `bytes=${start}-${end}`}
+                })
+                .then(res=>{
+                    downloadArr.push(res.data);
+                    window.root.innerHTML = downloadArr.join('') ;
+                    start = start + offset + 1 ;
+                    end = start + offset
+                }).catch(err=>{
+                    console.log(err)
+                })
+            },1000)
+        },false);
+
+        suspend_btn.addEventListener('click',function(){
+            window.clearInterval(timer)
+        },false);
+
+        
+    </script>
+</body>
+</html> 
