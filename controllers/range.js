@@ -18,7 +18,7 @@ class RangeController {
                 end = end? Number(end): statObj.size;
                 ctx.status = 206;
                 ctx.set({
-                    'Content-range':`bytes ${start}-${end}/${statObj.size}`,
+                    'Content-Range':`bytes ${start}-${end}/${statObj.size}`,
                     'Content-Length':end-start+1
                 })
                 ctx.body = fs.createReadStream(rPath,{start,end})

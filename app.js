@@ -37,7 +37,7 @@ app
   // }))
   .use(refererHandler)
   .use(cacheHandler)
-  .use(zipHandler)
+  //.use(zipHandler)
   .use(logger()) // 日志中间件
 
 

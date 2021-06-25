@@ -20,7 +20,6 @@ module.exports = async (ctx,next) => {
                     let referer = ctx.header['referer']; // http://localhost:8080/
                     let h = ctx.host; // localhost:3000 => 请求头中的host
                     let r = new URL(referer).host;  // localhost:8080 => 浏览器的地址栏决定的
-                    
                     if(h == r || whitList.includes(r)){
                         ctx.body = await fs.createReadStream(realPath);
                     }else{
