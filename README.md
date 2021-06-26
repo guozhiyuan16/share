@@ -221,3 +221,88 @@ https://wx2.sinaimg.cn/large/0024cZx9ly8grtevkbgodj60f408in3t02.jpg
 
 
 ## 压缩
+
+
+
+## cookie
+
+- HTTP1.0中协议是`无状态`的，但在WEB应用中，在多个请求之间共享会话是非常必要的，所以出现了Cookie
+- cookie是为了`辩别用户身份`，进行会话跟踪而`存储在客户端`上的数据
+
+### 使用步骤
+
+- 服务器发送cookie 
+
+客户端第一次访问服务器的时候服务器通过响应头向客户端发送Cookie,属性之间用分号空格分隔
+
+```
+Set-Cookie:name=xxx; Path=/
+```
+
+- 客户端接收保存cookie
+
+客户端接收到Cookie之后保存在本地
+
+- 客户端发送cookie
+
+以后客户端再请求服务器的时候会把此Cookie发送到服务器端
+
+```
+Cookie:name=zfpx
+```
+
+### cookie重要属性
+
+| 属性 | 说明 |
+| --- | --- |
+| `name=value` | 键值对，可以`设置要保存的 Key/Value` |
+| `Domain` | 域名，`默认是当前域名` |
+| `maxAge` | 最大失效时间(毫秒),设置在多少后失效 |
+| Expires| 过期时间(秒)，在设置的某个时间点后该 Cookie 就会失效，如 expires=Money, 05-Dec-11 11:11:11 GMT |
+| secure | 当 secure 值为 true 时，cookie 在 HTTP 中是无效，在 HTTPS 中才有效 |
+| `Path`	 | 表示 cookie 影响到的路径，如 path=/。如果`路径不能匹配时，浏览器则不发送这个Cookie` |
+| `httpOnly` | 如果在COOKIE中设置了httpOnly属性，则通过程序`(JS脚本)将无法读取到COOKIE`信息，防止XSS攻击产生 |
+
+### cookie 注意事项
+
+- 可能被客户端篡改，`使用前验证合法性`
+- `不要存储敏感数据`，比如用户密码，账户余额
+- `使用httpOnly`保证安全
+- 尽量`减少cookie的体积`
+- `设置正确的domain和path`，减少数据传输
+
+
+## session
+
+- session是另一种记录客户状态的机制，不同的是Cookie保存在客户端浏览器中，而session保存在服务器上
+- 客户端浏览器访问服务器的时候，服务器把客户端信息以某种形式记录在服务器上，这就是session。客户端浏览器再次访问时只需要从该Session中查找该客户的状态就可以了
+
+
+### cookie和session区别
+
+1. cookie数据存放在客户的浏览器上，session数据放在服务器上。
+2. cookie不是很安全，别人可以分析存放在本地的COOKIE并进行COOKIE欺骗 考虑到安全应当使用session
+3. session会在一定时间内保存在服务器上。当访问增多，会比较占用你服务器的性能 考虑到减轻服务器性能方面,应当使用COOKIE
+4. 单个cookie保存的数据不能超过4K，很多浏览器都限制一个站点最多保存20个cookie
+
+> 将登陆信息等重要信息存放为session、其他信息如果需要保留，可以放在cookie中
+
+
+## JWT (json-web-token)
+
+
+
+
+
+
+
+
+## User-Agent
+
+User Agent中文名为用户代理，简称 UA，它是一个特殊字符串头，使得服务器能够识别客户使用的操作系统及版本、CPU 类型、浏览器及版本、浏览器渲染引擎、浏览器语言、浏览器插件等。
+
+- 请求头 User-Agent:Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36
+
+> [浏览器野史 UserAgent列传（上）](http://litten.me/2014/09/26/history-of-browser-useragent/#more)
+
+> [浏览器野史 UserAgent列传（下）](http://litten.me/2014/10/05/history-of-browser-useragent2/)
