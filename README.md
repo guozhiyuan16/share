@@ -60,7 +60,7 @@ nodemon app.js
 
 ## `防盗链`
 
-> 这个技术用的最多的应该就是对于图片的限制，只有在白名单中的域名可以获取到，其他域名返回一个提示图片。（减轻自己服务器压力）
+> 这个技术用的最多的应该就是对于图片的限制，只有在`白名单中的域名可以获取到`，其他域名返回一个提示图片。（减轻自己服务器压力）
 > ps : 微博图片有防盗链
 
 ### 如何本地模拟防盗链效果？
@@ -102,7 +102,7 @@ https://wx2.sinaimg.cn/large/0024cZx9ly8grtevkbgodj60f408in3t02.jpg
 |     |  设置响应 `Content-Length`:`end-start+1`|
 |     | http请求完成 |
 
-
+> [如何手写一款KOA的中间件来实现断点续传](https://juejin.cn/post/6844903668458717192)
 
 ## `缓存`
 
@@ -220,11 +220,26 @@ https://wx2.sinaimg.cn/large/0024cZx9ly8grtevkbgodj60f408in3t02.jpg
 ![第二次请求](http://101.34.12.12/img/second.png)
 
 
+> [HTTP 缓存的那些事儿](https://juejin.cn/post/6844903662934818824)
+
 ## 压缩
 
+| client | server |
+| --- | --- |
+| html中请求一张图片 |  |
+|     |  接收对方的`Accept-Encoding`(`gzip, deflate, br`)  |
+|     |  根据顺序判断支不支持这些压缩方式 |
+|     |  如果有配置就返回压缩后的文件 |
+| 渲染不同的图片 | http请求完成 |
 
 
 ## cookie
+
+```bash
+# host
+127.0.0.1	a.gzy.com
+127.0.0.1	b.gzy.com
+```
 
 - HTTP1.0中协议是`无状态`的，但在WEB应用中，在多个请求之间共享会话是非常必要的，所以出现了Cookie
 - cookie是为了`辩别用户身份`，进行会话跟踪而`存储在客户端`上的数据
@@ -256,7 +271,7 @@ Cookie:name=zfpx
 | 属性 | 说明 |
 | --- | --- |
 | `name=value` | 键值对，可以`设置要保存的 Key/Value` |
-| `Domain` | 域名，`默认是当前域名` |
+| `Domain` | 域名，`默认是当前域名`(cookie`能跨域获取`) |
 | `maxAge` | 最大失效时间(毫秒),设置在多少后失效 |
 | Expires| 过期时间(秒)，在设置的某个时间点后该 Cookie 就会失效，如 expires=Money, 05-Dec-11 11:11:11 GMT |
 | secure | 当 secure 值为 true 时，cookie 在 HTTP 中是无效，在 HTTPS 中才有效 |
@@ -268,19 +283,20 @@ Cookie:name=zfpx
 - 可能被客户端篡改，`使用前验证合法性`
 - `不要存储敏感数据`，比如用户密码，账户余额
 - `使用httpOnly`保证安全
-- 尽量`减少cookie的体积`
+- 每次`请求都会携带cookie`,尽量`减少cookie的体积`
 - `设置正确的domain和path`，减少数据传输
 
 
 ## session
 
-- session是另一种记录客户状态的机制，不同的是Cookie保存在客户端浏览器中，而session保存在服务器上
+- session是基于cookie的
+- session是另一种记录客户状态的机制，不同的是`Cookie保存在客户端`浏览器中，而`session保存在服务器`上
 - 客户端浏览器访问服务器的时候，服务器把客户端信息以某种形式记录在服务器上，这就是session。客户端浏览器再次访问时只需要从该Session中查找该客户的状态就可以了
 
 
 ### cookie和session区别
 
-1. cookie数据存放在客户的浏览器上，session数据放在服务器上。
+1. cookie数据存`放在客户的浏览器`上，`session数据放在服务器`上。
 2. cookie不是很安全，别人可以分析存放在本地的COOKIE并进行COOKIE欺骗 考虑到安全应当使用session
 3. session会在一定时间内保存在服务器上。当访问增多，会比较占用你服务器的性能 考虑到减轻服务器性能方面,应当使用COOKIE
 4. 单个cookie保存的数据不能超过4K，很多浏览器都限制一个站点最多保存20个cookie

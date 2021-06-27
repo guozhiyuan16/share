@@ -8,7 +8,7 @@ const zipWhiteList = ['.html','.js','.css','.jpeg','.png'];
 module.exports = async (ctx,next) => {
     let extName = path.extname(ctx.url);
     if(ctx.method === 'GET' && zipWhiteList.includes(extName)){
-        let encoding = ctx.header['accept-encoding'];
+        let encoding = ctx.header['accept-encoding']; // gzip, deflate, br
         let realPath = path.join(__dirname,'../','/page',ctx.url); // 请求路径
         try{
             let statObj = await stat(realPath);

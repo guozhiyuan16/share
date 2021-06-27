@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>session</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <ul class='cookie'>
+        <li><button id="write" class="btn btn-primary">写入</button></li>
+        <li><button id="read" class="btn btn-primary">读取</button></li>
+    </ul>
+    <div id="root">
+        这是测试session页面
+    </div>
+    <script src="lib/axios.js"></script>
+    <script>
+        var write_cookie = document.getElementById('write');
+        var read_cookie = document.getElementById('read');
+        
+        write_cookie.addEventListener('click',function(){
+            axios.get('/visit').then(res=>{
+                    window.root.innerHTML = res.data ;
+                }).catch(err=>{
+                    console.log(err)
+                })
+        },false);
+        
+    </script>
+</body>
+</html> 

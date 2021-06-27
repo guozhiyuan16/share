@@ -18,7 +18,8 @@
     "koa-router": "^10.0.0",
     "koa-static": "^5.0.0",
     "koa-views": "^7.0.1",
-    "koa2-cors": "^2.0.6"
+    "koa2-cors": "^2.0.6",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "bootstrap": "^5.0.1",
