@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jwt</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <ul class='cookie'>
+        <li><button id="write" class="btn btn-primary">登录 </button></li>
+        <li><button id="read" class="btn btn-primary">发token</button></li>
+    </ul>
+    <div id="root">
+        这是测试jwt页面
+    </div>
+    <script src="lib/axios.js"></script>
+    <script>
+        
+        var write_cookie = document.getElementById('write');
+        var read_cookie = document.getElementById('read');
+        
+        write_cookie.addEventListener('click',function(){
+            axios({
+                method: 'POST',
+                headers: { 'content-type': 'application/json' },
+                data: {
+                    username:"admin",
+                    password:123456
+                },
+                url:'/login'
+            }).then(res=>{
+                    window.root.innerHTML = `${JSON.stringify(res.data)}` ;
+                }).catch(err=>{
+                    console.log(err)
+                })
+        },false);
+
+        read_cookie.addEventListener('click',function(){
+            axios({
+                url:'/vilidate',
+                method: 'POST',
+                headers: { 
+                    'content-type': 'application/json',
+                    'authorization':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOiIyMDIxLTA2LTI3VDE2OjA5OjE5LjIzNloiLCJ1c2VybmFtZSI6ImFkbWluIn0.0Qpc00oAkOXeSfgsG2tyycIZDggScE-5cIaqqZpjuhw' 
+                },
+                data: {
+                    username:"admin",
+                    password:123456
+                },
+            }).then(res=>{
+                    window.root.innerHTML = `${JSON.stringify(res.data)}` ;
+                }).catch(err=>{
+                    console.log(err)
+                })
+        },false);
+        
+    </script>
+</body>
+</html> 

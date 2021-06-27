@@ -24,12 +24,12 @@ app
   // .use(cors()) // 解决跨域问题中间件
   .use( // 解析请求体中间件
     koaBody({
-      multipart:true, // 支持文件上传
-      encoding:'gzip',
-      formidable:{
-        keepExtensions: true, // 保持文件的后缀
-        maxFileSize: 2000 * 1024 * 1024 // 设置上传文件大小最大限制，默认20M
-      }
+      // multipart:true, // 支持文件上传
+      // encoding:'gzip',
+      // formidable:{
+      //   keepExtensions: true, // 保持文件的后缀
+      //   maxFileSize: 2000 * 1024 * 1024 // 设置上传文件大小最大限制，默认20M
+      // }
     })
   )
   // .use(views(path.join(__dirname, 'view'), { // 加载模板引擎中间件
