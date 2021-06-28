@@ -1,6 +1,6 @@
 # requestHeader
 
-> 请求头中的常见属性说明以及这些属性的作用
+> 请求头中的常见属性说明以及作用
 
 ## 实现功能
 
@@ -9,7 +9,9 @@
 - [x] `Range` 实现文件**断点续传**（206）
 - [x] `Cache-Control & Last-Modified & ETag` 实现**缓存**
 - [x] `Accept-Encoding` 实现**文件压缩**
-- [x] `Cookie` 实现 **cookie & session & jwt**
+- [x] `Cookie`  cookie使用已经`封装setCookie`
+- [x] `session` 基于cookie实现`session使用`
+- [x] `JWT` jwt使用
 
 ## 启动这个项目
 
@@ -64,6 +66,7 @@ nodemon app.js
 > ps : 微博图片有防盗链
 
 ### 如何本地模拟防盗链效果？
+
 ```bash
 ## 打开微博，随意找到一张图片 
 https://wx2.sinaimg.cn/large/0024cZx9ly8grtevkbgodj60f408in3t02.jpg
@@ -137,8 +140,6 @@ https://wx2.sinaimg.cn/large/0024cZx9ly8grtevkbgodj60f408in3t02.jpg
 |     |  响应设置`Cache-Control:max-age=10` |
 |     |  10秒内不要找我 |
 |  发起请求，超出`过期时间`重新请求，否则直接拿缓存  | |
-
-
 
 
 #### B.对比缓存
@@ -237,8 +238,8 @@ https://wx2.sinaimg.cn/large/0024cZx9ly8grtevkbgodj60f408in3t02.jpg
 
 ```bash
 # host
-127.0.0.1	a.gzy.com
-127.0.0.1	b.gzy.com
+127.0.0.1	a.test.com
+127.0.0.1	b.test.com
 ```
 
 - HTTP1.0中协议是`无状态`的，但在WEB应用中，在多个请求之间共享会话是非常必要的，所以出现了Cookie
@@ -297,16 +298,16 @@ Cookie:name=zfpx
 ### cookie和session区别
 
 1. cookie数据存`放在客户的浏览器`上，`session数据放在服务器`上。
-2. cookie不是很安全，别人可以分析存放在本地的COOKIE并进行COOKIE欺骗 考虑到安全应当使用session
+2. cookie不是很安全，别人可以分析存放在本地的COOKIE并进行COOKIE欺骗 `考虑到安全应当使用session`
 3. session会在一定时间内保存在服务器上。当访问增多，会比较占用你服务器的性能 考虑到减轻服务器性能方面,应当使用COOKIE
-4. 单个cookie保存的数据不能超过4K，很多浏览器都限制一个站点最多保存20个cookie
+4. 单个cookie保存的数据`不能超过4K`，很多浏览器都限制一个站点`最多保存20个`cookie
 
 > 将登陆信息等重要信息存放为session、其他信息如果需要保留，可以放在cookie中
 
 
 ## JWT
 
-- JSON Web Token（jwt） 是目前最流行的跨域身份验证解决方案
+- JSON Web Token（jwt） 是目前最流行的`跨域`身份验证解决方案
 
 - 解决问题： session不支持分布式架构，无法支持横向扩展，只能通过数据库来保存会话数据实现共享。如果持久层失败会出现认证失败
 
@@ -326,14 +327,14 @@ Cookie:name=zfpx
 - Payload 负载，载荷
 
 ```bash
-# JWT 规定了7隔官方字段
-iss (issuer): 签发人
-exp (expiration time): 过期时间
-sub (subject): 主题
-aud (audience): 受众
-nbf (Not Before): 生效时间
-iat (Issued At): 签发时间
-jti (JWT ID): 编号
+# JWT 规定了7个官方字段
+iss (issuer): `签发人`
+exp (expiration time): `过期时间`
+sub (subject): `主题`
+aud (audience): `受众`
+nbf (Not Before): `生效时间`
+iat (Issued At): `签发时间`
+jti (JWT ID): `编号`
 
 ```
 - Signature 签名
@@ -353,19 +354,20 @@ HMACSHA256(
 
 ### 使用方式
  
-HTTP 请求头 Authorization 字段里面
+HTTP `请求头 Authorization` 字段里面
 
 ```
 Authorization: Bearer <token>
 ```
 
-通过url传输
+通过`url传输`
 
 ```
 api.example.com/?token = xxx
 ```
-如果是post请求也可以放在请求体中
+如果是post请求也可以`放在请求体中`
 
+> [JSON Web Token 入门教程](http://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html)
 
 ## User-Agent
 
