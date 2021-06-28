@@ -4,7 +4,7 @@ const cardName = 'connect.sid'; // 每个服务可能定义的 cardName 不一�
 class SessionController {
     static async visit(ctx){
         let cardId = ctx.getCookie(cardName);
-        if(cardId && session[cardId]){ // 不是首次 (服务重新启动，session丢失，就不认了)-> session持久化 -> 数据库，redise
+        if(cardId && session[cardId]){ // 不是首次 (服务重新启动，session丢失，就不认了)-> session持久化 -> 数据库，redis
             session[cardId].m -= 10;
             ctx.body = `${session[cardId].m} $`
         }else{ // 第一次 发卡存session

@@ -20,6 +20,12 @@ module.exports = async (ctx,next) => {
                         ctx.status = 200;
                         ctx.body = fs.createReadStream(realPath).pipe(zlib.createGzip())
                     }
+                    if(encoding.includes('deflate')){
+                        ctx.set('Content-Encoding','deflate');
+                        ctx.type = path.extname(realPath);
+                        ctx.status = 200;
+                        ctx.body = fs.createReadStream(realPath).pipe(zlib.createDeflate())
+                    }
                 }
             }
         }catch(e){

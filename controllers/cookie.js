@@ -32,6 +32,7 @@ class CookieController {
 
     static async readCookie(ctx){
         // let cookie = ctx.header['cookie'];
+        // ctx.body = cookie; 
         let value = ctx.getCookie('age',{signed:true}) // 需要判断是否篡改传 signed:true
         ctx.body = value;
     }

@@ -6,7 +6,8 @@ const stat = promisify(fs.stat);
 const referList = ['.jpeg','.png']; // 只有这些后缀为静态文件，其他为借口
 const whitList = [ // 可以正常访问图片的白名单
     'localhost:3000',
-    'www.pic1.me:3000'
+    'a.test.me:3000',
+    // 'b.test.me:3000'
 ]
 module.exports = async (ctx,next) => {
     let extName = path.extname(ctx.url);

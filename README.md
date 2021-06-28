@@ -174,7 +174,7 @@ https://wx2.sinaimg.cn/large/0024cZx9ly8grtevkbgodj60f408in3t02.jpg
 ###### 最后修改时间存在问题
 
 - 某些服务器不能精确得到文件的最后修改时间， 这样就无法通过最后修改时间来判断文件是否更新了。
-- 某些文件的修改非常频繁，在秒以下的时间内进行修改. Last-Modified只能精确到秒。
+- 某些文件的修改非常频繁，在秒以下的时间内进行修改. `Last-Modified只能精确到秒`。
 - 一些文件的最后修改时间改变了，但是内容并未改变。 我们不希望客户端认为这个文件修改了。
 - 如果同样的一个文件位于多个CDN服务器上的时候内容虽然一样，修改时间不一样。
 
@@ -197,6 +197,7 @@ https://wx2.sinaimg.cn/large/0024cZx9ly8grtevkbgodj60f408in3t02.jpg
 |    | `文件签名` 与 `E-Tag`比较|
 |    | 相等返回`304`不相等返回最新文件 |
 
+> ETag生成不一定需要读取文件，也可以 statObj.ctime + '.' + statObj.ctime (正常情况ETag不会这么准确)
 > [你知道 http 响应头中的 ETag 是如何生成的吗](https://juejin.cn/post/6844904018012012552)
 
 ### crypto加密模块

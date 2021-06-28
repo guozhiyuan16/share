@@ -17,6 +17,9 @@ module.exports = async (ctx,next) => {
                     // 强制缓存
                     // ctx.set('Cache-Control','max-age=10'); // chrome
                     // ctx.set('Expires', new Date(Date.now() + 10 * 1000).toUTCString()); // IE 需要设置绝对时间 （兼容写法优先级低）
+                    // ctx.type = path.extname(realPath);
+                    // ctx.status = 200;
+                    // ctx.body = await fs.createReadStream(realPath);
 
                     // 协商缓存
                     // 1) Last-Modified 和 If-Modified-Since
